@@ -1,0 +1,46 @@
+/*
+ * style.css
+ * 数当てゲームだけに必要な見た目です。
+ * ボタン・スコア・メッセージの基本は common.css にあります。
+ */
+
+.guess-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.guess-row {
+  display: flex;
+  gap: 8px;
+}
+
+.guess-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #12151e;
+  color: var(--text);
+  font: inherit;
+  font-size: 1.15rem;
+}
+
+.guess-row input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ブラウザ標準のスピンボタンは、学習用には邪魔なので隠す */
+.guess-row input::-webkit-outer-spin-button,
+.guess-row input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.guess-row .btn {
+  flex: 0 0 auto;
+}
