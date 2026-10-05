@@ -1,0 +1,61 @@
+/*
+ * style.css
+ * クリックカウンターだけに必要な見た目です。
+ * カード、スコア、メッセージ、ボタンの基本は common.css にあります。
+ */
+
+#score-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+#score-area .score-display {
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 0;
+  padding: 12px 8px;
+}
+
+#score-area .score-value {
+  font-size: 2rem;
+}
+
+#record-area .score-display {
+  margin-bottom: 16px;
+}
+
+.click-button {
+  width: 100%;
+  min-height: 140px;
+  font-size: 1.8rem;
+  letter-spacing: 0.08em;
+  user-select: none;
+  touch-action: manipulation;
+  background: #12151e;
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
+/* 計測中だけ、押せるボタンだと分かる色にする */
+.click-button:not(:disabled) {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+}
+
+.click-button:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.start-button {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.start-button[hidden] {
+  display: none;
+}

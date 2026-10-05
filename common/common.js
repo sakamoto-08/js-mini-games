@@ -101,12 +101,16 @@ function createRestartButton(parent, onRestart, label) {
 }
 
 /**
- * 経過秒数を数える最小限のタイマーです。
- * 今回の数当てゲームでは使いません。
- * 反応速度ゲームなど、あとから制限時間を付けるときに拡張します。
+ * 1秒ごとに経過秒数を増やすタイマーです。
+ * 中では setInterval で数え、stop / reset で clearInterval しています。
  *
- * 使い方のイメージ:
- *   const timer = createTimer();
+ * onTick を渡すと、秒が増えた直後にその秒数で呼ばれます。
+ * 残り時間の表示を更新したいゲームで使います。
+ *
+ * 使い方:
+ *   const timer = createTimer(function (seconds) {
+ *     console.log(seconds); // 1, 2, 3, ...
+ *   });
  *   timer.start();
  *   timer.getSeconds(); // 経過秒
  *   timer.stop();
@@ -114,8 +118,9 @@ function createRestartButton(parent, onRestart, label) {
  *
  * 返しているのは「関数をまとめたオブジェクト」です。
  * start / stop / reset / getSeconds をあとから呼べます。
+ * onTick は省略できます。
  */
-function createTimer() {
+function createTimer(onTick) {
   let seconds = 0;
   let intervalId = null;
 
@@ -128,6 +133,11 @@ function createTimer() {
 
       intervalId = setInterval(function () {
         seconds += 1;
+
+        // 渡されていれば、増えたあとの秒数を知らせる
+        if (typeof onTick === "function") {
+          onTick(seconds);
+        }
       }, 1000);
     },
 
