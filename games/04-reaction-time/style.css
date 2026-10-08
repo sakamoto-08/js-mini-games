@@ -1,0 +1,97 @@
+/*
+ * style.css
+ * 反応速度ゲームだけに必要な見た目です。
+ * カード、スコア、メッセージ、ボタンの基本は common.css にあります。
+ */
+
+/* カードが画面より高いとき、中央寄せのままだと上側が切れます。上から並べます。 */
+body {
+  align-items: start;
+}
+
+#score-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+#score-area .score-display {
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 0;
+  padding: 12px 8px;
+}
+
+#score-area .score-label {
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+#score-area .score-value {
+  font-size: 1.7rem;
+  white-space: nowrap;
+}
+
+.target-button {
+  width: 100%;
+  min-height: 168px;
+  font-size: 1.45rem;
+  letter-spacing: 0.04em;
+  user-select: none;
+  touch-action: manipulation;
+  background: #12151e;
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
+.target-button:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+/* 待機中は暗い青。まだ押してはいけない色です。 */
+.target-button.is-waiting {
+  background: #1a2744;
+  color: #9ec0ea;
+  border-color: #3d5a80;
+  cursor: pointer;
+}
+
+.game-shell.is-waiting {
+  border-color: #3d5a80;
+}
+
+/* 計測開始。待機中から色も文字もはっきり変えます。 */
+.target-button.is-go {
+  background: #d7f5c8;
+  color: #14301a;
+  border-color: #8ed0aa;
+  font-size: 1.65rem;
+  cursor: pointer;
+}
+
+.game-shell.is-go {
+  background: #163024;
+  border-color: #8ed0aa;
+}
+
+.target-button.is-false-start {
+  background: #3a2424;
+  color: #f0a396;
+  border-color: #8a534c;
+}
+
+.game-shell.is-false-start {
+  border-color: #8a534c;
+}
+
+.start-button {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.start-button[hidden] {
+  display: none;
+}
