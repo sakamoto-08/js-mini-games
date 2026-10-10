@@ -1,0 +1,102 @@
+/*
+ * style.css
+ * モグラ叩きだけに必要な見た目です。
+ * カード、スコア、メッセージ、ボタンの基本は common.css にあります。
+ */
+
+/* カードが画面より高いとき、中央寄せのままだと上側が切れます。 */
+body {
+  align-items: start;
+}
+
+#score-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+#score-area .score-display {
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 0;
+  padding: 12px 8px;
+}
+
+#score-area .score-value {
+  font-size: 2rem;
+}
+
+#record-area .score-display {
+  margin-bottom: 16px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.hole {
+  position: relative;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #10131b;
+  box-shadow: inset 0 10px 0 #07090e;
+  overflow: hidden;
+  cursor: default;
+  touch-action: manipulation;
+}
+
+.hole:disabled {
+  opacity: 1;
+}
+
+.hole.has-mole {
+  cursor: pointer;
+}
+
+/* 普段は穴の下に隠し、has-mole のときだけ顔を出す */
+.mole {
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  bottom: 0;
+  height: 72%;
+  border-radius: 50% 50% 42% 42%;
+  background: #e0b56a;
+  transform: translateY(110%);
+}
+
+.hole.has-mole .mole {
+  transform: translateY(18%);
+}
+
+.eye {
+  position: absolute;
+  top: 34%;
+  width: 14%;
+  height: 14%;
+  border-radius: 50%;
+  background: #1c1408;
+}
+
+.eye-left {
+  left: 24%;
+}
+
+.eye-right {
+  right: 24%;
+}
+
+.start-button {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.start-button[hidden] {
+  display: none;
+}

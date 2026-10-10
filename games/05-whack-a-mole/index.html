@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>モグラ叩き | JS Mini Games</title>
+    <!-- 共通スタイル → このゲームだけのスタイル、の順で読み込む -->
+    <link rel="stylesheet" href="../../common/common.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <p class="game-kicker">05 / Whack a Mole</p>
+      <h1>モグラ叩き</h1>
+      <p class="game-lead">
+        スタートを押すと、30秒間はじまります。<br />
+        出てきたモグラを叩いてください。
+      </p>
+
+      <!-- 得点と残り時間、最高記録は script.js が common.js で作る -->
+      <div id="score-area"></div>
+      <div id="record-area"></div>
+
+      <!-- 9つの穴は script.js が作る -->
+      <div id="board" class="board"></div>
+
+      <button type="button" id="start-button" class="btn start-button">スタート</button>
+
+      <p id="message" class="message" hidden aria-live="polite"></p>
+
+      <!-- 「もう一度」ボタンは script.js が作る -->
+      <div id="restart-area" hidden></div>
+    </main>
+
+    <!-- common.js を先に読み、そのあとでゲーム本体を読む -->
+    <script src="../../common/common.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
