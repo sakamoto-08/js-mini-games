@@ -1,0 +1,91 @@
+/*
+ * style.css
+ * タイピングだけに必要な見た目です。
+ * カード、スコア、メッセージ、ボタンの基本は common.css にあります。
+ */
+
+/* カードが画面より高いとき、中央寄せのままだと上側が切れます。 */
+body {
+  align-items: start;
+}
+
+#score-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+#score-area .score-display {
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 0;
+  padding: 12px 8px;
+}
+
+#score-area .score-value {
+  font-size: 2rem;
+}
+
+#record-area .score-display {
+  margin-bottom: 16px;
+}
+
+.word {
+  margin: 4px 0 16px;
+  min-height: 1.3em;
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.type-input {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #12151e;
+  color: var(--text);
+  font: inherit;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.type-input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ここまでの文字が単語の先頭と一致している */
+.type-input.is-correct {
+  border-color: var(--success);
+}
+
+/* 表示と違う文字が入っている */
+.type-input.is-wrong {
+  border-color: var(--error);
+}
+
+.type-input:disabled {
+  opacity: 0.55;
+}
+
+.start-button {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.start-button[hidden] {
+  display: none;
+}

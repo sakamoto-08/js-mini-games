@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>タイピング | JS Mini Games</title>
+    <!-- 共通スタイル → このゲームだけのスタイル、の順で読み込む -->
+    <link rel="stylesheet" href="../../common/common.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <p class="game-kicker">07 / Typing</p>
+      <h1>タイピング</h1>
+      <p class="game-lead">
+        スタートを押すと、60秒間はじまります。<br />
+        英単語を表示どおりに入力します。
+      </p>
+
+      <!-- 正解数と残り時間、最高記録は script.js が common.js で作る -->
+      <div id="score-area"></div>
+      <div id="record-area"></div>
+
+      <p id="word" class="word">—</p>
+
+      <label for="type-input" class="input-label">ここに入力</label>
+      <input
+        id="type-input"
+        class="type-input"
+        type="text"
+        autocomplete="off"
+        autocapitalize="off"
+        autocorrect="off"
+        spellcheck="false"
+        disabled
+      />
+
+      <button type="button" id="start-button" class="btn start-button">スタート</button>
+
+      <p id="message" class="message" hidden aria-live="polite"></p>
+
+      <!-- 「もう一度」ボタンは script.js が作る -->
+      <div id="restart-area" hidden></div>
+    </main>
+
+    <!-- common.js を先に読み、そのあとでゲーム本体を読む -->
+    <script src="../../common/common.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
