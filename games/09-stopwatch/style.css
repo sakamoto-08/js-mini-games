@@ -1,0 +1,77 @@
+/*
+ * style.css
+ * ストップウォッチだけに必要な見た目です。
+ * カード、スコア、メッセージ、ボタンの基本は common.css にあります。
+ */
+
+/* ラップが増えてカードが高くなったとき、上側が切れないようにします。 */
+body {
+  align-items: start;
+}
+
+.time {
+  margin: 4px 0 16px;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+
+#score-area .score-display {
+  margin-bottom: 16px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* createRestartButton は幅100%と上余白を付けます。ここでは枠の中に収めます。 */
+#reset-area .btn-restart {
+  width: 100%;
+  margin-top: 0;
+}
+
+.lap-list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  max-height: 180px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.lap-list[hidden] {
+  display: none;
+}
+
+.lap-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+
+.lap-list li:first-child {
+  border-top: 0;
+}
+
+.lap-label {
+  color: var(--muted);
+}
