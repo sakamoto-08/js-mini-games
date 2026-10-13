@@ -1,0 +1,101 @@
+/*
+ * style.css
+ * 神経衰弱だけに必要な見た目です。
+ * カード枠、スコア、メッセージ、ボタンの基本は common.css にあります。
+ */
+
+/* 盤面が画面より高いとき、中央寄せのままだと上側が切れます。 */
+body {
+  align-items: start;
+}
+
+#score-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+#score-area .score-display {
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 0;
+  padding: 12px 8px;
+}
+
+#score-area .score-value {
+  font-size: 2rem;
+}
+
+#record-area .score-display {
+  margin-bottom: 16px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+/* 裏向き。菱形の印だけが見えます。 */
+.card {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #10131b;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.card::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--accent);
+  border-radius: 3px;
+  transform: rotate(45deg);
+}
+
+/* 表向き。印を消して、絵文字を出します。 */
+.card.is-up {
+  background: #2a3146;
+  border-color: #4a556e;
+}
+
+.card.is-up::before {
+  content: none;
+}
+
+.card-face {
+  display: none;
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.card.is-up .card-face {
+  display: block;
+}
+
+/* 揃ったカードは緑にして、もう押せない見た目にします。 */
+.card.is-matched {
+  border-color: var(--success);
+  background: var(--success-bg);
+  opacity: 0.72;
+  cursor: default;
+}
+
+.card:disabled {
+  opacity: 0.72;
+  cursor: default;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>神経衰弱 | JS Mini Games</title>
+    <!-- 共通スタイル → このゲームだけのスタイル、の順で読み込む -->
+    <link rel="stylesheet" href="../../common/common.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <p class="game-kicker">08 / Memory</p>
+      <h1>神経衰弱</h1>
+      <p class="game-lead">
+        同じ絵柄を2枚ずつ揃えます。<br />
+        2枚めくるたびに、手数が1増えます。
+      </p>
+
+      <!-- 手数とペア数、最少手数は script.js が common.js で作る -->
+      <div id="score-area"></div>
+      <div id="record-area"></div>
+
+      <!-- 16枚のカードは script.js が作る -->
+      <div id="board" class="board"></div>
+
+      <p id="message" class="message" hidden aria-live="polite"></p>
+
+      <!-- 「もう一度」ボタンは script.js が作る -->
+      <div id="restart-area"></div>
+    </main>
+
+    <!-- common.js を先に読み、そのあとでゲーム本体を読む -->
+    <script src="../../common/common.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
