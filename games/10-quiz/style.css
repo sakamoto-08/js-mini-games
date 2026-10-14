@@ -1,0 +1,94 @@
+/*
+ * style.css
+ * クイズだけに必要な見た目です。
+ * カード、スコア、メッセージ、ボタンの基本は common.css にあります。
+ */
+
+/* 解説でカードが高くなったとき、上側が切れないようにします。 */
+body {
+  align-items: start;
+}
+
+#score-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+#score-area .score-display {
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 0;
+  padding: 12px 8px;
+}
+
+#score-area .score-value {
+  font-size: 1.6rem;
+}
+
+.question {
+  margin: 0 0 16px;
+  min-height: 3.2em;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.choices {
+  display: grid;
+  gap: 8px;
+}
+
+.choices[hidden] {
+  display: none;
+}
+
+.choice {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.choice:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.choice:disabled {
+  cursor: default;
+}
+
+.choice:disabled:not(.is-correct):not(.is-wrong) {
+  opacity: 0.45;
+}
+
+.choice.is-correct {
+  border-color: var(--success);
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.choice.is-wrong {
+  border-color: var(--error);
+  background: var(--error-bg);
+  color: var(--error);
+}
+
+.message {
+  margin-top: 12px;
+}
+
+.next-button {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.next-button[hidden] {
+  display: none;
+}

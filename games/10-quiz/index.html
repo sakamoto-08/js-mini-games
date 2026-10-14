@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>クイズ | JS Mini Games</title>
+    <!-- 共通スタイル → このゲームだけのスタイル、の順で読み込む -->
+    <link rel="stylesheet" href="../../common/common.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <p class="game-kicker">10 / Quiz</p>
+      <h1>クイズ</h1>
+      <p class="game-lead">
+        4つの中から答えを選びます。<br />
+        選ぶと、すぐ正解がわかります。
+      </p>
+
+      <!-- 正解数と問題番号は script.js が common.js で作る -->
+      <div id="score-area"></div>
+
+      <p id="question" class="question"></p>
+      <div id="choices" class="choices"></div>
+
+      <p id="message" class="message" hidden aria-live="polite"></p>
+
+      <button type="button" id="next-button" class="btn next-button" hidden>次の問題へ</button>
+
+      <!-- 「もう一度」ボタンは script.js が作る -->
+      <div id="restart-area" hidden></div>
+    </main>
+
+    <!-- common.js を先に読み、そのあとでゲーム本体を読む -->
+    <script src="../../common/common.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
