@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>スネーク | JS Mini Games</title>
+    <!-- 共通スタイル → このゲームだけのスタイル、の順で読み込む -->
+    <link rel="stylesheet" href="../../common/common.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <p class="game-kicker">11 / Snake</p>
+      <h1>スネーク</h1>
+      <p class="game-lead">
+        矢印キーか WASD で進みます。<br />
+        餌を食べると、体が伸びます。
+      </p>
+
+      <!-- スコアと最高記録は script.js が common.js で作る -->
+      <div id="score-area"></div>
+
+      <div class="board-wrap">
+        <!-- 幅と高さの本当の値は script.js がマスの数から入れます -->
+        <canvas id="board" width="288" height="288" aria-label="蛇の盤面"></canvas>
+      </div>
+
+      <p id="message" class="message" hidden aria-live="polite"></p>
+
+      <!-- 「もう一度」ボタンは script.js が作る -->
+      <div id="restart-area" hidden></div>
+    </main>
+
+    <!-- common.js を先に読み、そのあとでゲーム本体を読む -->
+    <script src="../../common/common.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
