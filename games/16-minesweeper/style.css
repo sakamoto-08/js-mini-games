@@ -1,0 +1,96 @@
+/*
+ * style.css
+ * マインスイーパーだけに必要な見た目です。
+ * カード、スコア、メッセージ、ボタンの基本は common.css にあります。
+ */
+
+/* 盤面が画面より高いとき、中央寄せのままだと上側が切れます。 */
+body {
+  align-items: start;
+}
+
+#score-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+#score-area .score-display {
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 0;
+  padding: 12px 8px;
+}
+
+#score-area .score-value {
+  font-size: 2rem;
+}
+
+/* 列の数は script.js が COLS から指定します。 */
+.board {
+  display: grid;
+  gap: 4px;
+}
+
+/* 閉じたマス。開くと背景を暗くして、掘ったように見せます。 */
+.cell {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #2a3146;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+}
+
+.cell:hover:not(.is-open) {
+  border-color: var(--accent);
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.cell.is-open {
+  background: #10131b;
+  cursor: default;
+}
+
+.cell.is-flag {
+  color: var(--accent);
+}
+
+.cell.is-mine {
+  background: rgba(240, 163, 150, 0.16);
+}
+
+.cell.is-exploded {
+  background: var(--error);
+  color: var(--accent-ink);
+}
+
+/* 数字の色。1 が青、3 が赤、という定番に近い並びです。 */
+.cell.n1 { color: #9ec0ea; }
+.cell.n2 { color: #8ed0aa; }
+.cell.n3 { color: #f0a396; }
+.cell.n4 { color: #c7b0ea; }
+.cell.n5 { color: #e7b15a; }
+.cell.n6 { color: #f3d7a1; }
+.cell.n7 { color: #f3f0ea; }
+.cell.n8 { color: #a7adbb; }
+
+.message {
+  margin-top: 16px;
+}
