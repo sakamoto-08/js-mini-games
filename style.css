@@ -1,0 +1,155 @@
+/*
+ * style.css
+ * トップページ専用の見た目です。
+ * 色、文字、ボタンの基本は common/common.css にあります。
+ */
+
+/* common.css は1枚のカードを中央に置く前提なので、一覧ページでは通常の流れに戻します。 */
+body {
+  display: block;
+  padding: 0;
+}
+
+.page {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 40px 0 48px;
+}
+
+.site-header {
+  margin-bottom: 32px;
+}
+
+.site-header h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+.site-lead {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.site-note {
+  margin: 0 0 20px;
+  color: var(--muted);
+}
+
+.site-header .btn {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* スマホは1列。幅が広がると 2 → 3 → 4 列になります。 */
+.game-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 18px 18px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  transition: transform 0.16s ease, border-color 0.16s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+
+.game-id {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.game-card h2 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+}
+
+.game-description {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.tags li {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--info-bg);
+  color: var(--info);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.game-card .btn {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+  text-align: center;
+  text-decoration: none;
+}
+
+.site-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.site-footer p {
+  margin: 0 0 6px;
+}
+
+.site-footer a {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@media (min-width: 700px) {
+  .game-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 980px) {
+  .game-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .game-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-card {
+    transition: none;
+  }
+
+  .game-card:hover {
+    transform: none;
+  }
+}
