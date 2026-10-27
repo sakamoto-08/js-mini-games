@@ -160,3 +160,68 @@ function createTimer(onTick) {
     },
   };
 }
+
+/**
+ * localStorage から最高記録を読みます。
+ * まだ無い、数字でない、0未満のときは 0 を返します。
+ * ブラウザが保存を拒否しても、ゲームが止まらないように 0 を返します。
+ *
+ * @param {string} key ゲームごとに違う保存名
+ * @returns {number}
+ */
+function getHighScore(key) {
+  try {
+    const saved = localStorage.getItem(key);
+
+    if (saved === null) {
+      return 0;
+    }
+
+    const score = Number(saved);
+
+    if (!Number.isFinite(score) || score < 0) {
+      return 0;
+    }
+
+    return Math.floor(score);
+  } catch (error) {
+    return 0;
+  }
+}
+
+/**
+ * 最高記録を localStorage に書き込みます。
+ * 保存できたときは true、ブラウザに拒否されたときは false です。
+ *
+ * @param {string} key ゲームごとに違う保存名
+ * @param {number} score 保存する得点
+ * @returns {boolean}
+ */
+function setHighScore(key, score) {
+  try {
+    localStorage.setItem(key, String(Math.floor(score)));
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+/**
+ * score が保存済みの記録より大きいときだけ書き込みます。
+ * 戻り値は、そのあとの最高記録です。超えていなければ、今の記録のままです。
+ * 0点は記録になりません。まだ保存が無いときも 0 のままです。
+ *
+ * @param {string} key ゲームごとに違う保存名
+ * @param {number} score 今回の得点
+ * @returns {number}
+ */
+function updateHighScore(key, score) {
+  const current = getHighScore(key);
+
+  if (score > current) {
+    setHighScore(key, score);
+    return Math.floor(score);
+  }
+
+  return current;
+}

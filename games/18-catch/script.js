@@ -12,6 +12,7 @@
  * 描画は Canvas、動きは requestAnimationFrame です。
  * 残り時間だけは createTimer（1秒ごと）で数えます。
  * スコア・最高記録・結果メッセージ・もう一度ボタンは common.js を使います。
+ * 最高記録は localStorage に残すので、ページを閉じても消えません。
  */
 
 // 盤面の大きさ（ピクセル）です。
@@ -61,8 +62,11 @@ let spawnElapsed = 0;
 let score = 0;
 let lives = START_LIVES;
 
-// このページを開いてからの最高記録。再読み込みするまで残します。
-let highScore = 0;
+// このゲームだけの保存名です。他のゲームの記録と混ざらないようにします。
+const HIGH_SCORE_KEY = "js-mini-games-catch-highscore";
+
+// ブラウザに残っている最高記録です。まだ無いときは 0 です。
+let highScore = getHighScore(HIGH_SCORE_KEY);
 
 /**
  * ゲームの状態です。次の3つの文字列のどれかだけを入れます。
@@ -79,7 +83,7 @@ const heldKeys = { left: false, right: false };
 let lastFrameTime = 0;
 
 const scoreDisplay = createScoreDisplay(scoreArea, "スコア", 0);
-const highScoreDisplay = createScoreDisplay(scoreArea, "最高記録", 0);
+const highScoreDisplay = createScoreDisplay(scoreArea, "最高記録", highScore);
 const lifeDisplay = createScoreDisplay(scoreArea, "ライフ", START_LIVES);
 const timeDisplay = createScoreDisplay(scoreArea, "残り時間", TIME_LIMIT);
 
@@ -261,7 +265,8 @@ function beginPlaying() {
 
 /**
  * ライフが0、または時間切れにします。
- * reason は "lives" か "time" です。得点が最高より大きいときだけ記録します。
+ * reason は "lives" か "time" です。
+ * 得点が最高より大きいときだけ、localStorage に保存します。
  */
 function finishGame(reason) {
   if (gameState === "finished") {
@@ -276,7 +281,7 @@ function finishGame(reason) {
   const isRecord = score > highScore;
 
   if (isRecord) {
-    highScore = score;
+    highScore = updateHighScore(HIGH_SCORE_KEY, score);
     updateScore(highScoreDisplay, highScore);
   }
 
