@@ -13,6 +13,7 @@
  * createTimer は 1 秒ごとにしか進まないので、蛇の移動には使いません。
  * 移動の間隔は performance.now() と同じ時刻で数えます。
  * スコア・結果メッセージ・もう一度ボタンは common.js の関数を使います。
+ * 最高記録は localStorage に残すので、ページを閉じても消えません。
  */
 
 // 横のマス数と縦のマス数です。ここを変えると盤面の広さが変わります。
@@ -50,8 +51,11 @@ let food = null;
 // いまの得点。餌を1つ食べるたびに 1 増えます。
 let score = 0;
 
-// このページを開いてからの最高記録。再読み込みするまで残します。
-let highScore = 0;
+// このゲームだけの保存名です。他のゲームの記録と混ざらないようにします。
+const HIGH_SCORE_KEY = "js-mini-games-snake-highscore";
+
+// ブラウザに残っている最高記録です。まだ無いときは 0 です。
+let highScore = getHighScore(HIGH_SCORE_KEY);
 
 /**
  * ゲームの状態です。次の3つの文字列のどれかだけを入れます。
@@ -65,7 +69,7 @@ let gameState = "ready";
 let lastMoveTime = 0;
 
 const scoreDisplay = createScoreDisplay(scoreArea, "スコア", 0);
-const highScoreDisplay = createScoreDisplay(scoreArea, "最高記録", 0);
+const highScoreDisplay = createScoreDisplay(scoreArea, "最高記録", highScore);
 
 /**
  * マスの位置が、parts のどれかと重なるかを返します。
@@ -199,7 +203,8 @@ function step() {
 }
 
 /**
- * ゲームオーバーにします。得点がこれまでの最高より大きいときだけ記録を更新します。
+ * ゲームオーバーにします。
+ * 得点が最高より大きいときだけ、localStorage に保存します。
  */
 function finishGame() {
   gameState = "finished";
@@ -208,7 +213,7 @@ function finishGame() {
   const isRecord = score > highScore;
 
   if (isRecord) {
-    highScore = score;
+    highScore = updateHighScore(HIGH_SCORE_KEY, score);
     updateScore(highScoreDisplay, highScore);
     showMessage(messageElement, score + "点でゲームオーバー。最高記録です！", "success");
   } else if (score === 0 && highScore === 0) {
