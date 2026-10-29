@@ -14,6 +14,7 @@
  * 蛇は一定時間ごとに1マス進みますが、ボールは毎フレーム少しずつ動かします。
  * フレームの間隔は揺れるので、前回からの秒数を速度に掛けて、速さを一定にします。
  * スコア・結果メッセージ・もう一度ボタン・発射のずれは common.js の関数を使います。
+ * 最高記録は localStorage に残すので、ページを閉じても消えません。
  */
 
 // 盤面の大きさ（ピクセル）です。
@@ -69,7 +70,12 @@ let ball = { x: 0, y: 0, vx: 0, vy: 0 };
 const heldKeys = { left: false, right: false };
 
 let score = 0;
-let highScore = 0;
+
+// このゲームだけの保存名です。他のゲームの記録と混ざらないようにします。
+const HIGH_SCORE_KEY = "js-mini-games-breakout-highscore";
+
+// ブラウザに残っている最高記録です。まだ無いときは 0 です。
+let highScore = getHighScore(HIGH_SCORE_KEY);
 
 /**
  * ゲームの状態です。次の3つの文字列のどれかだけを入れます。
@@ -83,7 +89,7 @@ let gameState = "ready";
 let lastFrameTime = 0;
 
 const scoreDisplay = createScoreDisplay(scoreArea, "スコア", 0);
-const highScoreDisplay = createScoreDisplay(scoreArea, "最高記録", 0);
+const highScoreDisplay = createScoreDisplay(scoreArea, "最高記録", highScore);
 
 /**
  * 値を min 以上、max 以下に収めます。
@@ -402,7 +408,8 @@ function launchBall() {
 
 /**
  * クリアかゲームオーバーにします。
- * result は "clear" か "over" です。得点が最高より大きいときだけ記録します。
+ * result は "clear" か "over" です。
+ * 得点が最高より大きいときだけ、localStorage に保存します。
  */
 function finishGame(result) {
   if (gameState === "finished") {
@@ -414,7 +421,7 @@ function finishGame(result) {
   const isRecord = score > highScore;
 
   if (isRecord) {
-    highScore = score;
+    highScore = updateHighScore(HIGH_SCORE_KEY, score);
     updateScore(highScoreDisplay, highScore);
   }
 
