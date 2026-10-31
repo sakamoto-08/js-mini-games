@@ -12,6 +12,7 @@
  * 残り時間は createTimer です。中身は 1 秒ごとの setInterval です。
  * モグラを出す間隔は、それとは別の setInterval で動かします。
  * スコア表示・メッセージ・乱数・もう一度ボタンは common.js の関数を使います。
+ * 最高記録は localStorage に残すので、ページを閉じても消えません。
  */
 
 // 制限時間（秒）。ここを変えると、ゲームの長さが変わります。
@@ -48,9 +49,12 @@ let spawnIntervalId = null;
 // いまの得点。プレイのたびに 0 に戻します。
 let score = 0;
 
-// このページを開いてからの最高記録。
-// 「もう一度」では消さず、再読み込みするまで残します。
-let highScore = 0;
+// このゲームだけの保存名です。他のゲームの記録と混ざらないようにします。
+const HIGH_SCORE_KEY = "js-mini-games-whack-highscore";
+
+// ブラウザに残っている最高記録です。まだ無いときは 0 です。
+// 「もう一度」では消しません。
+let highScore = getHighScore(HIGH_SCORE_KEY);
 
 /**
  * ゲームの状態です。次の3つの文字列のどれかだけを入れます。
@@ -62,7 +66,7 @@ let gameState = "ready";
 
 const scoreDisplay = createScoreDisplay(scoreArea, "得点", 0);
 const timeDisplay = createScoreDisplay(scoreArea, "残り時間", TIME_LIMIT);
-const highScoreDisplay = createScoreDisplay(recordArea, "最高記録", 0);
+const highScoreDisplay = createScoreDisplay(recordArea, "最高記録", highScore);
 
 /**
  * 穴を1つ作り、盤面に追加します。
@@ -247,6 +251,7 @@ function buildResultMessage(isNewRecord) {
 /**
  * 時間切れの処理です。
  * 両方のタイマーを止めて、最終スコアを出します。
+ * 得点が最高より大きいときだけ、localStorage に保存します。
  */
 function finishGame() {
   if (gameState !== "playing") {
@@ -259,7 +264,7 @@ function finishGame() {
 
   const isNewRecord = score > highScore;
   if (isNewRecord) {
-    highScore = score;
+    highScore = updateHighScore(HIGH_SCORE_KEY, score);
     updateScore(highScoreDisplay, highScore);
   }
 
