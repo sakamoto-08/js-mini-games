@@ -12,6 +12,7 @@
  * 描画は Canvas、繰り返しは requestAnimationFrame です。
  * ポンと同じく、前回からの秒数を速度に掛けて動かします。
  * スコア・最高記録・結果メッセージ・もう一度ボタン・隙間の乱数は common.js を使います。
+ * 最高記録は localStorage に残すので、ページを閉じても消えません。
  */
 
 // 盤面の大きさ（ピクセル）です。縦長にしています。
@@ -59,8 +60,11 @@ let pipes = [];
 
 let score = 0;
 
-// このページを開いてからの最高記録。再読み込みするまで残します。
-let highScore = 0;
+// このゲームだけの保存名です。他のゲームの記録と混ざらないようにします。
+const HIGH_SCORE_KEY = "js-mini-games-flappy-highscore";
+
+// ブラウザに残っている最高記録です。まだ無いときは 0 です。
+let highScore = getHighScore(HIGH_SCORE_KEY);
 
 /**
  * ゲームの状態です。次の3つの文字列のどれかだけを入れます。
@@ -74,7 +78,7 @@ let gameState = "ready";
 let lastFrameTime = 0;
 
 const scoreDisplay = createScoreDisplay(scoreArea, "スコア", 0);
-const highScoreDisplay = createScoreDisplay(scoreArea, "最高記録", 0);
+const highScoreDisplay = createScoreDisplay(scoreArea, "最高記録", highScore);
 
 /**
  * 2つの四角が重なっているかを返します。
@@ -250,7 +254,8 @@ function flap() {
 }
 
 /**
- * ゲームオーバーにします。得点が最高より大きいときだけ記録を更新します。
+ * ゲームオーバーにします。
+ * 得点が最高より大きいときだけ、localStorage に保存します。
  */
 function finishGame() {
   if (gameState === "finished") {
@@ -262,7 +267,7 @@ function finishGame() {
   const isRecord = score > highScore;
 
   if (isRecord) {
-    highScore = score;
+    highScore = updateHighScore(HIGH_SCORE_KEY, score);
     updateScore(highScoreDisplay, highScore);
     showMessage(messageElement, score + "点でゲームオーバー。最高記録です！", "success");
     restartArea.hidden = false;
