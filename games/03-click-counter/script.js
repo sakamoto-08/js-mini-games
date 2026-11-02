@@ -11,6 +11,7 @@
  *
  * スコア表示・メッセージ・タイマー・もう一度ボタンは common.js の関数を使います。
  * setInterval / clearInterval そのものは createTimer の中にあります。
+ * 最高記録は localStorage に残すので、ページを閉じても消えません。
  */
 
 // 制限時間（秒）。ここを変えると、ゲームの長さが変わります。
@@ -26,9 +27,12 @@ const restartArea = document.getElementById("restart-area");
 // いま何回押したか。プレイのたびに 0 に戻します。
 let clickCount = 0;
 
-// このページを開いてからの最高記録。
-// 「もう一度」では消さず、再読み込みするまで残します。
-let highScore = 0;
+// このゲームだけの保存名です。他のゲームの記録と混ざらないようにします。
+const HIGH_SCORE_KEY = "js-mini-games-click-counter-highscore";
+
+// ブラウザに残っている最高記録です。まだ無いときは 0 です。
+// 「もう一度」では消しません。
+let highScore = getHighScore(HIGH_SCORE_KEY);
 
 /**
  * ゲームの状態です。次の3つの文字列のどれかだけを入れます。
@@ -40,7 +44,7 @@ let gameState = "ready";
 
 const clickDisplay = createScoreDisplay(scoreArea, "クリック数", 0);
 const timeDisplay = createScoreDisplay(scoreArea, "残り時間", TIME_LIMIT);
-const highScoreDisplay = createScoreDisplay(recordArea, "最高記録", 0);
+const highScoreDisplay = createScoreDisplay(recordArea, "最高記録", highScore);
 
 /**
  * 状態に合わせて、ボタンを押せるか・表示するかを切り替えます。
@@ -93,6 +97,7 @@ function buildResultMessage(isNewRecord) {
 /**
  * 時間切れの処理です。
  * タイマーを止め、クリックを無効にし、最終スコアを出します。
+ * 得点が最高より大きいときだけ、localStorage に保存します。
  */
 function finishGame() {
   // すでに終わっているのに、もう一度呼ばれても何もしない
@@ -106,7 +111,7 @@ function finishGame() {
   // 記録を更新するかどうかは、数字を書き換える前に比べる
   const isNewRecord = clickCount > highScore;
   if (isNewRecord) {
-    highScore = clickCount;
+    highScore = updateHighScore(HIGH_SCORE_KEY, clickCount);
     updateScore(highScoreDisplay, highScore);
   }
 
