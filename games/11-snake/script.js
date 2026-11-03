@@ -23,8 +23,8 @@ const ROWS = 16;
 // 1マスの大きさ（ピクセル）です。
 const CELL = 18;
 
-// 蛇が1マス進む間隔（ミリ秒）です。小さくすると速くなります。
-const MOVE_EVERY_MS = 150;
+// 蛇が1マス進む間隔（ミリ秒）です。難易度調整用で、大きくすると遅くなります。
+const MOVE_EVERY_MS = 200;
 
 const canvas = document.getElementById("board");
 const ctx = canvas.getContext("2d");
