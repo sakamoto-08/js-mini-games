@@ -14,8 +14,8 @@ JavaScript の主要な考え方を、短いゲームを作りながら学ぶた
 js-mini-games/
 ├── README.md              このファイル。全体の案内
 ├── common/                ゲームをまたいで使う部品
-│   ├── common.css         共通の見た目（レイアウト、ボタン、メッセージ）
-│   └── common.js          共通の関数（乱数、スコア、メッセージ、リスタート、タイマー）
+│   ├── common.css         共通の見た目（レイアウト、スコア、ボタン、メッセージ）
+│   └── common.js          共通の関数（乱数、スコア、メッセージ、リスタート、タイマー、ハイスコア）
 └── games/                 ゲーム1つにつき1フォルダ
     ├── 01-number-guess/   数当て（index.html, style.css, script.js, README.md）
     ├── 02-janken/         じゃんけん（同じ4ファイル）
@@ -38,6 +38,8 @@ js-mini-games/
 ```
 
 `common` は「どのゲームでも要る処理」をまとめる場所です。各ゲームは相対パス（`../../common/common.js`）でこれを読み、ゲーム固有のルールだけを自分の `script.js` に書きます。
+
+`common.js` の関数は、乱数、スコア表示、メッセージ、リスタートボタン、タイマー、ハイスコアの順に並んでいます。最高記録は `getHighScore` で読み、記録を超えたときだけ `updateHighScore` が `localStorage` に残します。カード、スコア、ボタン、メッセージの見た目は `common.css` にまとめてあります。
 
 ## 学習の進め方
 

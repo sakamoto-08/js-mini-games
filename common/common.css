@@ -2,7 +2,11 @@
  * common.css
  * ミニゲーム共通の見た目です。
  * ゲームごとの差分は、各ゲームの style.css に書きます。
+ *
+ * 並びは、色 → レイアウト → スコア → ボタン → メッセージです。
  */
+
+/* --- 色 --- */
 
 :root {
   --bg: #12141c;
@@ -21,6 +25,8 @@
   --info-bg: rgba(158, 192, 234, 0.12);
   --radius: 16px;
 }
+
+/* --- レイアウト --- */
 
 * {
   box-sizing: border-box;
@@ -70,6 +76,8 @@ h1 {
   font-size: 0.95rem;
 }
 
+/* --- スコア --- */
+
 .score-display {
   display: flex;
   align-items: baseline;
@@ -93,32 +101,7 @@ h1 {
   font-weight: 700;
 }
 
-.message {
-  min-height: 1.6em;
-  margin: 16px 0 0;
-  padding: 12px 14px;
-  border-radius: 12px;
-  font-weight: 700;
-}
-
-.message[hidden] {
-  display: none;
-}
-
-.message-info {
-  color: var(--info);
-  background: var(--info-bg);
-}
-
-.message-success {
-  color: var(--success);
-  background: var(--success-bg);
-}
-
-.message-error {
-  color: var(--error);
-  background: var(--error-bg);
-}
+/* --- ボタン --- */
 
 .btn {
   border: 0;
@@ -147,4 +130,33 @@ h1 {
 
 #restart-area[hidden] {
   display: none;
+}
+
+/* --- メッセージ --- */
+
+.message {
+  min-height: 1.6em;
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.message[hidden] {
+  display: none;
+}
+
+.message-info {
+  color: var(--info);
+  background: var(--info-bg);
+}
+
+.message-success {
+  color: var(--success);
+  background: var(--success-bg);
+}
+
+.message-error {
+  color: var(--error);
+  background: var(--error-bg);
 }

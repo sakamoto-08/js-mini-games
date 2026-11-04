@@ -2,22 +2,21 @@
  * common.js
  * ミニゲーム集で使い回す共通関数です。
  *
+ * 並びは、乱数 → スコア表示 → メッセージ → リスタート → タイマー → ハイスコアです。
+ *
  * 読み込み方（各ゲームの index.html）:
  *   <script src="../../common/common.js"></script>
  *   <script src="script.js"></script>
  *
  * type="module" は付けていません。
- * そのため、ここで定義した関数は window に付き、
- * あとに読み込む script.js から関数名だけで呼べます。
+ * ここで定義した関数は、あとに読む script.js から関数名だけで呼べます。
  * 例: getRandomInt(1, 100)
  */
 
+// --- 乱数 ---
+
 /**
- * min 以上、max 以下の整数を1つ返します。
- * 両端を含むので、getRandomInt(1, 100) は 1 も 100 も出ます。
- *
- * Math.random() は 0 以上 1 未満の小数です。
- * それを (max - min + 1) 倍して切り捨て、min を足すと整数になります。
+ * min 以上、max 以下の整数を1つ返します。両端を含みます。
  */
 function getRandomInt(min, max) {
   const minInt = Math.ceil(min);
@@ -26,15 +25,11 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * range) + minInt;
 }
 
+// --- スコア表示 ---
+
 /**
- * スコア表示を作り、parent の中に追加します。
- * 返ってくるのは「数字が入っている要素」です。
- * あとから updateScore に渡して、表示だけ更新します。
- *
- * @param {HTMLElement} parent 追加先の要素
- * @param {string} label 見出し（例: "試行回数"）
- * @param {number|string} initialValue 最初に表示する値
- * @returns {HTMLElement} 値を表示している要素
+ * スコア表示を作り、parent に追加します。
+ * 戻り値は数字の要素です。あとから updateScore に渡します。
  */
 function createScoreDisplay(parent, label, initialValue) {
   const wrapper = document.createElement("div");
@@ -55,15 +50,17 @@ function createScoreDisplay(parent, label, initialValue) {
 }
 
 /**
- * createScoreDisplay が返した要素の表示を更新します。
+ * createScoreDisplay が返した要素の数字を書き換えます。
  */
 function updateScore(scoreElement, value) {
   scoreElement.textContent = String(value);
 }
 
+// --- メッセージ ---
+
 /**
- * 結果メッセージを表示します。
- * type で色を変えます: "info" | "success" | "error"
+ * 結果メッセージを出します。type は "info"、"success"、"error" です。
+ * 省略したときは "info" になります。
  */
 function showMessage(messageElement, text, type) {
   const messageType = type || "info";
@@ -73,7 +70,7 @@ function showMessage(messageElement, text, type) {
 }
 
 /**
- * メッセージを消します。
+ * メッセージを消して隠します。
  */
 function clearMessage(messageElement) {
   messageElement.textContent = "";
@@ -81,14 +78,11 @@ function clearMessage(messageElement) {
   messageElement.hidden = true;
 }
 
+// --- リスタートボタン ---
+
 /**
  * 「もう一度」ボタンを作り、parent に追加します。
- * クリックされたら onRestart を呼びます。
- *
- * @param {HTMLElement} parent 追加先
- * @param {function} onRestart 押し直したときに実行する関数
- * @param {string} [label] ボタンの文字。省略すると「もう一度遊ぶ」
- * @returns {HTMLButtonElement}
+ * 押すと onRestart を呼びます。label を省略すると「もう一度遊ぶ」です。
  */
 function createRestartButton(parent, onRestart, label) {
   const button = document.createElement("button");
@@ -100,25 +94,12 @@ function createRestartButton(parent, onRestart, label) {
   return button;
 }
 
+// --- タイマー ---
+
 /**
- * 1秒ごとに経過秒数を増やすタイマーです。
- * 中では setInterval で数え、stop / reset で clearInterval しています。
- *
- * onTick を渡すと、秒が増えた直後にその秒数で呼ばれます。
- * 残り時間の表示を更新したいゲームで使います。
- *
- * 使い方:
- *   const timer = createTimer(function (seconds) {
- *     console.log(seconds); // 1, 2, 3, ...
- *   });
- *   timer.start();
- *   timer.getSeconds(); // 経過秒
- *   timer.stop();
- *   timer.reset();
- *
- * 返しているのは「関数をまとめたオブジェクト」です。
- * start / stop / reset / getSeconds をあとから呼べます。
- * onTick は省略できます。
+ * 1秒ごとに秒数を増やすタイマーを返します。
+ * start / stop / reset / getSeconds を呼べます。
+ * onTick を渡すと、増えたあとの秒数で呼ばれます。省略できます。
  */
 function createTimer(onTick) {
   let seconds = 0;
@@ -161,13 +142,14 @@ function createTimer(onTick) {
   };
 }
 
+// --- ハイスコア ---
+// ゲームごとに違う key で localStorage に残します。
+// 読むのは getHighScore、書くだけなら setHighScore、
+// 記録を超えたときだけ残すなら updateHighScore です。
+
 /**
- * localStorage から最高記録を読みます。
- * まだ無い、数字でない、0未満のときは 0 を返します。
- * ブラウザが保存を拒否しても、ゲームが止まらないように 0 を返します。
- *
- * @param {string} key ゲームごとに違う保存名
- * @returns {number}
+ * 保存済みの最高記録を返します。
+ * 無い、数字でない、0未満、保存を使えないときは 0 です。
  */
 function getHighScore(key) {
   try {
@@ -190,12 +172,8 @@ function getHighScore(key) {
 }
 
 /**
- * 最高記録を localStorage に書き込みます。
- * 保存できたときは true、ブラウザに拒否されたときは false です。
- *
- * @param {string} key ゲームごとに違う保存名
- * @param {number} score 保存する得点
- * @returns {boolean}
+ * 最高記録を保存します。
+ * できたときは true、ブラウザに拒否されたときは false です。
  */
 function setHighScore(key, score) {
   try {
@@ -207,13 +185,9 @@ function setHighScore(key, score) {
 }
 
 /**
- * score が保存済みの記録より大きいときだけ書き込みます。
- * 戻り値は、そのあとの最高記録です。超えていなければ、今の記録のままです。
- * 0点は記録になりません。まだ保存が無いときも 0 のままです。
- *
- * @param {string} key ゲームごとに違う保存名
- * @param {number} score 今回の得点
- * @returns {number}
+ * score が今の記録より大きいときだけ保存します。
+ * 戻り値は、そのあとの最高記録です。超えていなければ今の記録のままです。
+ * 0点は記録になりません。
  */
 function updateHighScore(key, score) {
   const current = getHighScore(key);
