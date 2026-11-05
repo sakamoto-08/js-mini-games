@@ -25,6 +25,7 @@ const games = [
   { id: "16", title: "マインスイーパー簡易版", description: "地雷を避けながらマスを開く", concepts: ["2次元配列", "再帰", "タイマー"], path: "games/16-minesweeper/index.html" },
   { id: "17", title: "簡易RPG", description: "選択肢で進むテキストベースのRPG", concepts: ["オブジェクト", "場面データ", "分岐"], path: "games/17-rpg/index.html" },
   { id: "18", title: "キャッチゲーム", description: "落ちてくるアイテムをキャッチする", concepts: ["配列", "衝突判定", "アニメーション"], path: "games/18-catch/index.html" },
+  { id: "19", title: "落ちものパズル簡易版", description: "落ちてくるブロックを積んで列を消す", concepts: ["2次元配列", "落下", "行の消去"], path: "games/19-falling-puzzle/index.html" },
 ];
 
 const gameList = document.getElementById("game-list");
