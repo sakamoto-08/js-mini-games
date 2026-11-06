@@ -26,6 +26,7 @@ const games = [
   { id: "17", title: "簡易RPG", description: "選択肢で進むテキストベースのRPG", concepts: ["オブジェクト", "場面データ", "分岐"], path: "games/17-rpg/index.html" },
   { id: "18", title: "キャッチゲーム", description: "落ちてくるアイテムをキャッチする", concepts: ["配列", "衝突判定", "アニメーション"], path: "games/18-catch/index.html" },
   { id: "19", title: "落ちものパズル簡易版", description: "落ちてくるブロックを積んで列を消す", concepts: ["2次元配列", "落下", "行の消去"], path: "games/19-falling-puzzle/index.html" },
+  { id: "20", title: "迷路", description: "自動生成された迷路をゴールまで進む", concepts: ["2次元配列", "再帰", "キー入力"], path: "games/20-maze/index.html" },
 ];
 
 const gameList = document.getElementById("game-list");
